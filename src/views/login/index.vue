@@ -91,8 +91,27 @@ export default {
     login () {
       // validate校验整个表单规则得方法
       // 该方法内是一个回调函数， 有俩个校验参数  1，是否校验成功 2，未通过校验得字段
-      this.$refs.myForm.validate(function (isOk) {
+      this.$refs.myForm.validate((isOk) => {
         if (isOk) {
+          // 只有所有得校验通过后，才会进入请求
+          this.$axios({
+            method: 'post',
+            url: '/authorizations',
+            data: this.loginForm
+          }).then(result => {
+            // 将后台返回得token令牌 存储到前端缓存中
+            // console.log(result.data)
+            window.localStorage.setItem('user-token', result.data.data.token)
+            // 请求成功后，使用编程式导航返回主页面$router
+            this.$router.push('/home')
+          }).catch(() => {
+            // console.log(error.message)
+            // 组件内得提示信息样式
+            this.$message({
+              type: 'warning',
+              message: '手机号或验证码错误'
+            })
+          })
         }
       })
     }
