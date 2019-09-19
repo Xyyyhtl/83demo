@@ -7,29 +7,37 @@
         <img src="../../assets/img/logo_index.png" alt />
       </div>
       <!--  表单 必须得由 el-form包裹才可以 -->
-      <el-form style="margin-top:16px">
-          <!-- 每个表单域由一个 form-item 组件组成 -->
-        <el-form-item>
-            <!-- 表单域中可以放置各种类型得表单控件
+      <!-- 数据校验 使用v-bind来，绑定model(表单数据)，rules(验证规则) -->
+      <el-form
+        ref="myForm"
+        style="margin-top:16px"
+        v-bind:model="loginForm"
+        v-bind:rules="loginRules"
+      >
+        <!-- 每个表单域由一个 form-item 组件组成 -->
+        <!-- 使用验证规则来 验证下面表单组件  必须得设置属性prop绑定字段名 -->
+        <el-form-item prop="mobile">
+          <!-- 表单域中可以放置各种类型得表单控件
                 单，多，复选框均可
-                Select、Checkbox、Radio、Switch、DatePicker、TimePicker -->
-          <el-input></el-input>
+          Select、Checkbox、Radio、Switch、DatePicker、TimePicker-->
+          <!-- 手机号 绑定v-model 实现数据视图实时交换-->
+          <el-input placeholder="请输入手机号" v-model="loginForm.mobile"></el-input>
         </el-form-item>
         <!-- 表单域 输入框 -->
-        <el-form-item>
-            <!-- 输入验证码 表单域 -->
-          <el-input  style="width:60%"></el-input>
+        <el-form-item prop="code">
+          <!-- 输入验证码 表单域 -->
+          <el-input style="width:60%" placeholder="请输入验证码" v-model="loginForm.code"></el-input>
           <!-- 获取验证码按钮 -->
           <el-button type="primary" style="float:right">获取验证码</el-button>
         </el-form-item>
         <!-- 表单多选框 -->
-        <el-form-item>
-            <!-- 多选框 -->
-          <el-checkbox>我已阅读并同意用户协议和隐私条款</el-checkbox>
+        <el-form-item prop="agree">
+          <!-- 多选框 -->
+          <el-checkbox v-model="loginForm.agree">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <!-- 登录表单 按钮 -->
         <el-form-item>
-            <el-button style="width:100%" type="primary">登录</el-button>
+          <el-button @click="login" style="width:100%" type="primary">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -37,7 +45,59 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      // 表单数据 是一个对象
+      loginForm: {
+        mobile: '', // 手机号
+        code: '', // 验证码
+        agree: false // 是否同意协议
+      },
+      loginRules: {
+        // 登陆规则
+        // 校验规则：key（字段名）:value（对象数组） 一个对象就是一个校验规则
+        // required 为true（该字段必须填写才可以） 若为false（字段为空）则提示（message）
+        // required 只可以校验null ，空字符串，和unf
+        mobile: [
+          { required: true, message: '不可为空哦' },
+          // 第二个验证规则，pattern
+          { pattern: /^1[3456789]\d{9}$/, message: '请输入正确手机号' }
+        ],
+        code: [
+          { required: true, message: '不可为空哦' },
+          { pattern: /^\d{6}$/, message: '验证码不正确' }
+        ],
+        agree: [
+          {
+            validator: function (rule, value, callBack) {
+              // validator 自定义校验规则  本身就是一个函数
+              // rule 当前规则， value当前表单项得值， callBack 回调函数
+              // 正常模式
+              // if (value) {
+              //   callBack()
+              // } else {
+              //   callBack(new Error('该选项必选'))
+              // }
+              // 三元模式
+              value ? callBack() : callBack(new Error('狗蛋,莫要搞事儿赛'))
+            }
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    login () {
+      // validate校验整个表单规则得方法
+      // 该方法内是一个回调函数， 有俩个校验参数  1，是否校验成功 2，未通过校验得字段
+      this.$refs.myForm.validate(function (isOk) {
+        if (isOk) {
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
