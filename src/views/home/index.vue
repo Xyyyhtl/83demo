@@ -2,7 +2,10 @@
   <!-- 定义超级大容器 -->
   <el-container>
     <!-- 放置左侧列表容器 -->
-    <el-aside>左侧列表</el-aside>
+    <el-aside>
+      <!-- 左侧导航普通组件 -->
+      <layyou-aside></layyou-aside>
+    </el-aside>
     <!-- 右侧大容器 -->
     <el-container>
       <!-- 顶部导航栏容器 -->
@@ -17,7 +20,12 @@
 </template>
 
 <script>
-export default {}
+import layyouAside from '../../components/home/layout-aside'
+export default {
+  components: {
+    'layyou-aside': layyouAside
+  }
+}
 </script>
 
 <style>
