@@ -62,7 +62,8 @@ export default {
     // 公共点击事件方法
     commonClick (key) {
       if (key === 'account') {
-        // 跳转页面
+        // 跳转账户页面
+        this.$router.push('/home/account')
       } else if (key === 'git') {
         // 跳转到github项目网站
         window.location.href = 'https://github.com/Xyyyhtl/83demo'
