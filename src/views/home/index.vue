@@ -2,7 +2,7 @@
   <!-- 定义超级大容器 -->
   <el-container>
     <!-- 放置左侧列表容器 -->
-    <el-aside style="width:200px">
+    <el-aside style="width:200px;overflow:hidden;background-color: #323745">
       <!-- 左侧导航普通组件 -->
       <layout-aside></layout-aside>
     </el-aside>
@@ -14,7 +14,7 @@
         <layout-header></layout-header>
       </el-header>
       <!-- 中部容器 -->
-      <el-main>
+      <el-main style="padding:0">
         <!-- 二级路由容器 -->
         <router-view></router-view>
       </el-main>
