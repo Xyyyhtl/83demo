@@ -14,16 +14,17 @@
       <!-- 用户头像 -->
       <img class="head-img" :src="userInfo.photo ? userInfo.photo : dafaultImg" alt />
       <!-- 下拉菜单组件 -->
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="commonClick">
         <span class="el-dropdown-link">
           {{userInfo.name}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <!-- 具名插槽 -->
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人信息</el-dropdown-item>
-          <el-dropdown-item>git地址</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+        <el-dropdown-menu slot="dropdown" >
+          <!-- 当出发点击事件后，command属性会携带参数，将参数传给方法内对应得逻辑代码 -->
+          <el-dropdown-item command="account">个人信息</el-dropdown-item>
+          <el-dropdown-item command="git">git地址</el-dropdown-item>
+          <el-dropdown-item command="quit">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
@@ -57,6 +58,21 @@ export default {
         // 将接收得数据对象，赋值给 数据中得userInfo
         this.userInfo = result.data.data
       })
+    },
+    // 公共点击事件方法
+    commonClick (key) {
+      if (key === 'account') {
+        // 跳转页面
+      } else if (key === 'git') {
+        // 跳转到github项目网站
+        window.location.href = 'https://github.com/Xyyyhtl/83demo'
+      } else {
+        // 退出时清除token缓存 3种写法
+        window.localStorage.clear() // 只能清除本项目得前端缓存
+        this.$router.push('/login') // 且跳转回登录页面，重新登录，获取token
+        // window.localStorage.removeItem() //
+        // window.localStorage.getItem('user-token', '')
+      }
     }
   },
   // 使用钩子函数调用请求方法
