@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './permission' // 导入设置拦截后的路由表配置
 import ElementUI from 'element-ui' // ①,引入下载好的elementui插件
 import Component from './components' // 一引入插件对象（所有普通组件）
 import axios from 'axios' // 1，引入axios配置

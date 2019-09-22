@@ -6,7 +6,7 @@
     <el-col :span="6">
       <div class="grid-content bg-purple">
         <i class="el-icon-s-unfold"></i>
-        <span class="title">江苏传智播客教育科技股份有限公司</span>
+        <span class="title">上古时期,小猪佩奇大战奥特曼的血泪史</span>
       </div>
     </el-col>
     <!-- 右侧 -->
@@ -22,7 +22,7 @@
         <!-- 具名插槽 -->
         <el-dropdown-menu slot="dropdown" >
           <!-- 当出发点击事件后，command属性会携带参数，将参数传给方法内对应得逻辑代码 -->
-          <el-dropdown-item command="account">个人信息</el-dropdown-item>
+          <el-dropdown-item command="account">猪猪侠个人账户</el-dropdown-item>
           <el-dropdown-item command="git">git地址</el-dropdown-item>
           <el-dropdown-item command="quit">退出</el-dropdown-item>
         </el-dropdown-menu>
