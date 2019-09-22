@@ -101,7 +101,7 @@ export default {
           }).then(result => {
             // 将后台返回得token令牌 存储到前端缓存中
             // console.log(result.data)
-            window.localStorage.setItem('user-token', result.data.data.token)
+            window.localStorage.setItem('user-token', result.data.token)
             // 请求成功后，使用编程式导航返回主页面$router
             this.$router.push('/home')
           }).catch(() => {

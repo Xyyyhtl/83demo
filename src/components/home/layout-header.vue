@@ -56,7 +56,7 @@ export default {
         // headers: { Authorization: `Bearer ${token}` }
       }).then(result => {
         // 将接收得数据对象，赋值给 数据中得userInfo
-        this.userInfo = result.data.data
+        this.userInfo = result.data
       })
     },
     // 公共点击事件方法

@@ -1,4 +1,4 @@
-// 对axios 请求进行拦截处理
+// 对axios ① 请求进行拦截处理
 import axios from 'axios'
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'// 3,将地址得常态值设置给baseURL
 // 请求途中拦截  语法
@@ -12,6 +12,15 @@ axios.interceptors.request.use(function (config) {
   return config
 }, function (error) {
   // 对请求失败做处理
+  return Promise.reject(error)
+})
+
+// ② 响应拦截  // 对响应结果到达浏览器途中的或称到达then之前 拦截处理
+// response 响应体的对象
+axios.interceptors.response.use(function (response) {
+  // 有data数据属性 则返回data 若没有data则返回一个空对象
+  return response.data ? response.data : {}
+}, function (error) {
   return Promise.reject(error)
 })
 export default axios // 第一种
