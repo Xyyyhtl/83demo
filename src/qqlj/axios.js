@@ -50,7 +50,7 @@ axios.interceptors.response.use(function (response) {
   }
   // 希望在异常处理函数中，将所有的错误都处理完毕，不在进入catch，终止错误
   Message({ message }) // 调用该方法，方法内是对象，属性名是message，值是message
-  return new Promise(function () {}) // 终止当前的错误
+  return new Promise(function () {}) // 终止当前的错误或称终止进入catch
 })
 export default axios // 第一种
 
