@@ -104,13 +104,6 @@ export default {
             window.localStorage.setItem('user-token', result.data.token)
             // 请求成功后，使用编程式导航返回主页面$router
             this.$router.push('/home')
-          }).catch(() => {
-            // console.log(error.message)
-            // 组件内得提示信息样式
-            this.$message({
-              type: 'warning',
-              message: '手机号或验证码错误'
-            })
           })
         }
       })
