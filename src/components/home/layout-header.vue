@@ -48,12 +48,12 @@ export default {
     // 获取用户个人资料
     getUserInfo () {
       // 从前端缓存中获取token
-      let token = window.localStorage.getItem('user-token')
+      // let token = window.localStorage.getItem('user-token')
       this.$axios({
-        url: '/user/profile',
+        url: '/user/profile'
         // 请求头是一个对象
         // 参数Authorization 值Bearer ${token}参数结构
-        headers: { Authorization: `Bearer ${token}` }
+        // headers: { Authorization: `Bearer ${token}` }
       }).then(result => {
         // 将接收得数据对象，赋值给 数据中得userInfo
         this.userInfo = result.data.data
