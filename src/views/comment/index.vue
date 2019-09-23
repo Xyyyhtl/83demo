@@ -14,7 +14,16 @@
       <el-table-column :formatter="statusFormatter" align="center" prop="comment_status" label="评论状态"></el-table-column>
       <el-table-column align="center" prop="total_comment_count" label="评论数"></el-table-column>
       <el-table-column align="center" prop="fans_comment_count" label="粉丝评论数"></el-table-column>
-      <el-table-column align="center" label="操作"></el-table-column>
+      <el-table-column align="center" label="操作">
+        <!-- ② 使用emlementui 内得作用域插槽 父读取收子组件数据  emlementui已经做好了子组件 所以可以直接读取  -->
+        <template slot-scope="obj">
+          <!-- 操作里面的状态 需要根据评论状态 展示反值 当评论为关，操作显示打开 -->
+        <!-- ① （该子组件看不到，emlementui已经做好，直接可用）通过 作用域Scoped slot 可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，用法参考 demo。 -->
+          <el-button size="small" type="text">修改</el-button>
+          <!--  当状态为true 操作为关闭   false是打开 -->
+          <el-button size="small" type="text">{{obj.row.comment_status ? "关闭" : "打开"}}</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </el-card>
 </template>
