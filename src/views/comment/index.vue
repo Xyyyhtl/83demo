@@ -21,7 +21,7 @@
         <!-- ① （该子组件看不到，emlementui已经做好，直接可用）通过 作用域Scoped slot 可以获取到 row, column, $index 和 store（table 内部的状态管理）的数据，用法参考 demo。 -->
           <el-button size="small" type="text">修改</el-button>
           <!--  当状态为true 操作为关闭   false是打开 -->
-          <el-button size="small" type="text">{{obj.row.comment_status ? "关闭" : "打开"}}</el-button>
+          <el-button @click="closeOropen(obj.row)" size="small" type="text">{{obj.row.comment_status ? "关闭" : "打开"}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -54,6 +54,25 @@ export default {
     statusFormatter (row, column, cellValue, index) {
       // row["comment_status"] ? '正常' : '关闭' 也可以
       return cellValue ? '正常' : '关闭' // 当布尔值为true时显示文本正常，fasle为关闭
+    },
+    // 打开或关闭 评论状态  接收表达式得传参 row行得数据
+    closeOropen (row) {
+    //  获取评论状态得文本 true关闭 false打开
+      // let mess = row.comment_status ? '关闭' : '打开'
+      // 使用emlementui内得方法$confirm方法即可打开消息提示
+      this.$confirm(`你确定${row.comment_status ? '关闭' : '打开'}评论？`, '龟儿子', {
+      }).then(() => {
+        // 确定是调用接口, 根据关闭评论或打开评论状态
+        this.$axios({
+          url: '/comments/status', // 地址
+          method: 'put',
+          params: { article_id: row.id }, // 路径参数  传入文章得id
+          data: { allow_comment: !row.comment_status } // body参数 关闭打开，打开关闭  调用状态和当前状态是反着的 所以得取反
+        }).then(result => {
+          // 从新拉取数据
+          this.getComment()
+        })
+      })
     }
   },
   // 使用钩子函数 调用获取数据列表
