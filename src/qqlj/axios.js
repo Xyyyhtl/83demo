@@ -1,9 +1,17 @@
 // 对axios ① 请求进行拦截处理
 import axios from 'axios'
+import jsonBig from 'json-bigint' // 引入 大数字处理插件
 import router from '../permission' // 导入一个实例 为啥导入？因为这里this不指向vue实例 ，所以不能用this.$riuter
 import { Message } from 'element-ui' // 引入emlement-ui
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'// 3,将地址得常态值设置给baseURL
 // 请求途中拦截  语法
+
+// 处理大数字
+// 替换之前得转换放法 使用id大数字不失帧
+axios.defaults.transformResponse = [function (data) {
+  return jsonBig.parse(data) // 处理完成大数字， 完成后大数字是一个对象
+}]
+
 // config是请求体的对象（里面包含大量数据）
 axios.interceptors.request.use(function (config) {
   //  从前端缓存，拿到token
