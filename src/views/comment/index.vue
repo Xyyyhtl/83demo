@@ -1,6 +1,6 @@
 <template>
   <!-- 评论列表组件 -->
-  <el-card>
+  <el-card v-loading="loading">
     <!-- 给card得插槽 -->
     <bread-crumb slot="header">
       <!-- 给面包屑得 插槽 -->
@@ -64,7 +64,8 @@ export default {
         currentPage: 1,
         // 单页多少数据
         pageSize: 10
-      }
+      },
+      loading: false // 定义一个变量
     }
   },
   // 方法
@@ -78,6 +79,7 @@ export default {
     },
     // 获取评论列表数据
     getComment () {
+      this.loading = true
       this.$axios({
         url: '/articles', // 评论列表接口   page: this.page.currentPage当前最新页码，  per_page: this.page.pageSize 当前单页得数据
         params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize } // 传参数才可以获取，评论列表数据，comment参数得值，获取评论字段
@@ -85,6 +87,7 @@ export default {
       }).then(result => {
         this.list = result.data.results // 接收数据，results 评论列表对象  且赋值给list
         this.page.total = result.data.total_count // 获取到总数据，且赋值给总数据
+        this.loading = false
       })
     },
     // 该table属性 有4个参数
