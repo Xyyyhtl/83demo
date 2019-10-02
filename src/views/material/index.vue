@@ -6,6 +6,11 @@
       <!-- title具名 给面包屑组件 -->
       <template slot="title">素材管理</template>
     </bread-crumb>
+    <!-- 上传图片组件 el-upload -->
+    <!--  :http-request="" 自定义上传 :show-file-list="false" 隐藏上传文件名 -->
+    <el-upload :show-file-list="false" :http-request="uploadImg" action="" class="too-difficult">
+      <el-button type="primary">上传图片</el-button>
+    </el-upload>
     <!-- 标签页组件 v-model绑定得是 变量name属性-->
     <el-tabs v-model="activeName" @tab-click="changeTabe">
       <el-tab-pane label="全部素材" name="all">
@@ -54,6 +59,20 @@ export default {
     }
   },
   methods: {
+    // 上传方法  (传参)
+    uploadImg (params) {
+      const data = new FormData() // 声明一个新的表单
+      data.append('image', params.file)
+      // 上传文件
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data: data
+      }).then(() => {
+        // 表单数据
+        this.getMaterial()
+      })
+    },
     //    监听事件 ： 当事件发生改变时，会调用函数传入参数（这个参数就是当前事件改变时的页码），接收该参数
     changePage (newCurrentPage) {
       this.page.currentPage = newCurrentPage // 将最新页码赋值给当前页码
@@ -86,6 +105,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.too-difficult{
+  position: absolute;
+  right: 20px;
+  margin-top: -10px;
+}
 .img-list {
   display: flex;
   //换行
